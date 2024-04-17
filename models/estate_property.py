@@ -48,3 +48,13 @@ class RealStateProperty(models.Model):
         for record in self:
             record.best_price = max(
                 record.offers_ids.mapped("price"), default=0)
+
+    # only from view context
+    @api.onchange("garden")
+    def _onchange_garden(self):
+        if self.garden is True:
+            self.garden_area = 10
+            self.garden_orientation = 'north'
+        else:
+            self.garden_area = 0
+            self.garden_orientation = ''

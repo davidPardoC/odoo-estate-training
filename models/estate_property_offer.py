@@ -5,6 +5,7 @@ from datetime import timedelta
 class EstatePropertyOffer(models.Model):
     _name = 'estate.property.offer'
     _description = 'estate.property.offer'
+    _order = "price desc"
     _sql_constraints = [('check_price', 'CHECK(price > 0)',
                          'The price must be positive.')]
 

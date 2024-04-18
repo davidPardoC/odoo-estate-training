@@ -4,6 +4,7 @@ from odoo import fields, models, api, exceptions
 class RealStateProperty(models.Model):
     _name = "estate.property"
     _description = "Estate Propery"
+    _order = "id desc"
     _sql_constraints = [('check_expected_price', 'CHECK(expected_price > 0)',
                          'The expected price must be positive.'), ('check_selling_price', 'CHECK(selling_price >= 0)', 'The selling price must be positive.')]
 
@@ -24,7 +25,7 @@ class RealStateProperty(models.Model):
         string='Type', selection=[('north', 'Nort')])
     active = fields.Boolean(default=True)
     state = fields.Selection(selection=[('new', 'New'), ('offer_received', 'Offer Received'), (
-        'Offer Accepted', 'New'), ('sold', 'Sold'), ('canceled', 'Canceled')], default='new')
+        'offer_accepted', 'Offer Accepted'), ('sold', 'Sold'), ('canceled', 'Canceled')], default='new')
 
     property_type_id = fields.Many2one('estate.property.type')
 

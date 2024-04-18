@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <odoo>
 
+
     <record id="estate_property_type_view_form" model="ir.ui.view">
         <field name="name">estate.property.form</field>
         <field name="model">estate.property.type</field>
@@ -13,10 +14,29 @@
                         </h1>
                     </div>
                     <notebook>
-                        <page string="Properties"></page>
+                        <page string="Properties">
+                            <field name="property_ids">
+                                <tree>
+                                    <field name="name" string="Title" />
+                                    <field name="expected_price" />
+                                    <field name="state" />
+                                </tree>
+                            </field>
+                        </page>
                     </notebook>
                 </sheet>
             </form>
+        </field>
+    </record>
+
+    <record id="estate_property_type_view_tree" model="ir.ui.view">
+        <field name="name">Property Types</field>
+        <field name="model">estate.property.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="sequence" widget="handle" />
+            </tree>
         </field>
     </record>
 

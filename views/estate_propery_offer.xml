@@ -8,9 +8,9 @@
                 <field name="id" />
                 <field name="status" />
                 <button name="action_accept" string="Confirm" type="object"
-                    icon="fa-check" />
+                    icon="fa-check" invisible="status != False" />
                 <button name="action_refuse" string="Refuse"
-                    type="object" icon="fa-close" />
+                    type="object" icon="fa-close" invisible="status!= False" />
                 <field name="price" />
             </tree>
         </field>

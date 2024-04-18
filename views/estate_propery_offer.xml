@@ -7,6 +7,10 @@
             <tree string="Offers">
                 <field name="id" />
                 <field name="status" />
+                <button name="action_accept" string="Confirm" type="object"
+                    icon="fa-check" />
+                <button name="action_refuse" string="Refuse"
+                    type="object" icon="fa-close" />
                 <field name="price" />
             </tree>
         </field>

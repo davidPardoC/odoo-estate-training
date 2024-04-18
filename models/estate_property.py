@@ -1,9 +1,11 @@
-from odoo import fields, models, api
+from odoo import fields, models, api, exceptions
 
 
 class RealStateProperty(models.Model):
     _name = "estate.property"
     _description = "Estate Propery"
+    _sql_constraints = [('check_expected_price', 'CHECK(expected_price > 0)',
+                         'The expected price must be positive.'), ('check_selling_price', 'CHECK(selling_price >= 0)', 'The selling price must be positive.')]
 
     name = fields.Char(required=True)
     description = fields.Text()
@@ -58,3 +60,27 @@ class RealStateProperty(models.Model):
         else:
             self.garden_area = 0
             self.garden_orientation = ''
+
+    def action_sold(self):
+        for record in self:
+            if record.state != 'canceled':
+                record.state = 'sold'
+            else:
+                raise exceptions.UserError(
+                    "You can't sell a canceled property")
+        return True
+
+    def action_cancel(self):
+        for record in self:
+            if record.state != 'sold':
+                record.state = 'canceled'
+            else:
+                raise exceptions.UserError("You can't cancel a sold property")
+        return True
+
+    @api.constrains("selling_price")
+    def _check_selling_price(self):
+        for record in self:
+            if record.selling_price < record.expected_price * 0.9:
+                raise exceptions.ValidationError(
+                    "The selling price is too low.")

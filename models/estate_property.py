@@ -85,3 +85,11 @@ class RealStateProperty(models.Model):
             if record.selling_price < record.expected_price * 0.9:
                 raise exceptions.ValidationError(
                     "The selling price is too low.")
+
+    @api.ondelete(at_uninstall=False)
+    def prevent_delete(self):
+        for record in self:
+            if record.state not in ('new', 'canceled'):
+                raise exceptions.UserError(
+                    "You can't delete a property that is not new or canceled.")
+        return super().unlink()

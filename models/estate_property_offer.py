@@ -53,3 +53,15 @@ class EstatePropertyOffer(models.Model):
         for record in self:
             record.status = 'refused'
             return True
+
+    @api.model
+    def create(self, values):
+        current_offer_price = values.get('price')
+        best_price = self.env['estate.property'].browse(
+            values['property_id']).best_price
+        if current_offer_price < best_price:
+            raise exceptions.UserError(
+                "The price of the offer is too low. The best price is {}".format(best_price))
+        record = super().create(values)
+        record.property_id.state = 'offer_received'
+        return record

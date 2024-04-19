@@ -10,11 +10,16 @@ class EstatePropertyOffer(models.Model):
                          'The price must be positive.')]
 
     price = fields.Float()
+    validity = fields.Integer(default=7)
+
     status = fields.Selection(
         selection=[('accepted', 'Accepted'), ('refused', 'Refused')], copy=False)
     partner_id = fields.Many2one('res.partner', required=True)
     property_id = fields.Many2one('estate.property')
-    validity = fields.Integer(default=7)
+
+    property_type_id = fields.Many2one("estate.property.type",
+                                       related='property_id.property_type_id',  string="Property Type", store=True)
+
     date_deadline = fields.Date(
         compute="_compute_date_dead_line", inverse="_inverse_date_deadline")
 

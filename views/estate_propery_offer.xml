@@ -8,6 +8,7 @@
                 decoration-success="status == 'accepted'">
                 <field name="id" />
                 <field name="partner_id" />
+                <field name="property_type_id" />
                 <field name="status" invisible="1" />
                 <button name="action_accept" string="Confirm" type="object"
                     icon="fa-check" invisible="status != False" />
@@ -16,5 +17,12 @@
                 <field name="price" />
             </tree>
         </field>
+    </record>
+
+    <record id="estate_property_offer_action" model="ir.actions.act_window">
+        <field name="name">Property Offers</field>
+        <field name="res_model">estate.property.offer</field>
+        <field name="domain">[('property_type_id','=', active_id)]</field>
+        <field name="view_mode">tree,form</field>
     </record>
 </odoo>

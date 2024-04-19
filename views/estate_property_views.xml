@@ -12,6 +12,7 @@
                     <field name="bedrooms" />
                     <field name="living_area" string="Living Area (sqm)" />
                     <field name="facades" />
+                    <filter name="active" domain="[('active','=','False')]" />
                     <group expand="0" string="Group By">
                         <filter string="Postcode" name="postcode" context="{'group_by':'postcode'}" />
                     </group>
@@ -72,7 +73,12 @@
                                     </group>
                                 </page>
                                 <page string="Offers">
-                                    <field name="offers_ids" />
+
+                                    <field name="offers_ids"
+                                        readonly="state in ('offer_accepted', 'sold', 'canceled')"
+                                    />
+
+
                                 </page>
                                 <page string="Other Info">
                                     <group>
@@ -91,14 +97,18 @@
             <field name="name">estate.property.tree</field>
             <field name="model">estate.property</field>
             <field name='arch' type='xml'>
-                <tree string="Properties">
+                <tree string="Properties"
+                    decoration-success="state in ('offer_received' , 'offer_accepted')"
+                    decoration-bf="state == 'offer_accepted'"
+                    decoration-muted="state == 'sold'">
                     <field name="name" string="Title" />
                     <field name="postcode" />
                     <field name="bedrooms" />
                     <field name="living_area" string="Living Area (sqm)" />
                     <field name="expected_price" />
                     <field name="selling_price" />
-                    <field name="date_availability" />
+                    <field name="date_availability" optional="hide" />
+                    <field name="state" invisible="1" />
                 </tree>
             </field>
         </record>

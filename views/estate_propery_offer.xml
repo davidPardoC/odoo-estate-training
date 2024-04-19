@@ -4,9 +4,11 @@
         <field name="name">estate.property.offer.tree.view</field>
         <field name="model">estate.property.offer</field>
         <field name="arch" type="xml">
-            <tree string="Offers">
+            <tree string="Offers" editable="bottom" decoration-danger="status == 'refused'"
+                decoration-success="status == 'accepted'">
                 <field name="id" />
-                <field name="status" />
+                <field name="partner_id" />
+                <field name="status" invisible="1" />
                 <button name="action_accept" string="Confirm" type="object"
                     icon="fa-check" invisible="status != False" />
                 <button name="action_refuse" string="Refuse"
